@@ -15,5 +15,5 @@ module.exports = app => {
   router.delete("/:id", albums.delete);
   // Delete all Tutorials
   router.delete("/", albums.deleteAll);
-  app.use('/api/albums', router);
+  app.use('/api/albums+', router);
 };

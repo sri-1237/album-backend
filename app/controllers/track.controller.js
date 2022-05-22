@@ -32,14 +32,14 @@ exports.create = (req, res) => {
 };
 // Retrieve all Lessons from the database.
 exports.findAll = (req, res) => {
-  const trackId = req.query.trackId;
-  var condition = trackId ? {
-    trackId: {
-      [Op.like]: `%${trackId}%`
+  const albumId = req.query.albumId;
+  var condition = albumId ? {
+    albumId: {
+      [Op.like]: `%${albumId}%`
     }
   } : null;
 
-  Lesson.findAll({ where: condition })
+  Track.findAll({ where: condition })
     .then(data => {
       res.send(data);
     })
@@ -53,7 +53,7 @@ exports.findAll = (req, res) => {
 // Find a single Lesson with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Lesson.findByPk(id)
+  Track.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
@@ -72,7 +72,7 @@ exports.findOne = (req, res) => {
 // Update a Lesson by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Lesson.update(req.body, {
+  Track.update(req.body, {
     where: { id: id }
   })
     .then(num => {
@@ -95,7 +95,7 @@ exports.update = (req, res) => {
 // Delete a Lesson with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Lesson.destroy({
+  Track.destroy({
     where: { id: id }
   })
     .then(num => {
@@ -117,7 +117,7 @@ exports.delete = (req, res) => {
 };
 // Delete all Lessons from the database.
 exports.deleteAll = (req, res) => {
-  Lesson.destroy({
+  Track.destroy({
     where: {},
     truncate: false
   })
@@ -133,9 +133,9 @@ exports.deleteAll = (req, res) => {
 };
 // Find all published Lessons
 exports.findAllPublished = (req, res) => {
-  const lessonId = req.query.lessonId;
+  const trackId = req.query.trackId;
 
-  Lesson.findAll({ where: { published: true } })
+  Track.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
