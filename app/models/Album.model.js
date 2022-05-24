@@ -12,6 +12,15 @@ module.exports = (sequelize, Sequelize) => {
     },
     published: {
       type: Sequelize.BOOLEAN
+    },
+    fileType: {
+      type: Sequelize.STRING,
+    },
+    fileName: {
+      type: Sequelize.STRING,
+    },
+    data: {
+      type: Sequelize.BLOB("long"),
     }
   });
   return Album;

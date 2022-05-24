@@ -32,14 +32,9 @@ exports.create = (req, res) => {
 };
 // Retrieve all Lessons from the database.
 exports.findAll = (req, res) => {
-  const albumId = req.query.albumId;
-  var condition = albumId ? {
-    albumId: {
-      [Op.like]: `%${albumId}%`
-    }
-  } : null;
-
-  Track.findAll({ where: condition })
+  const albumId = req.params.albumId;
+  
+  Track.findAll({ where: {albumId : albumId} })
     .then(data => {
       res.send(data);
     })
