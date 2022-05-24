@@ -1,8 +1,9 @@
 module.exports = app => {
   const albums = require("../controllers/album.controller.js");
+  const upload = require("../middleware/upload");
   var router = require("express").Router();
   // Create a new Tutorial
-  router.post("/", albums.create);
+  router.post("/",upload.single("file"), albums.create);
   // Retrieve all Tutorials
   router.get("/", albums.findAll);
   // Retrieve all published Tutorials

@@ -1,6 +1,19 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const multer = require('multer');
+const path = require('path');
+const sharp = require('sharp');
+const bodyparser = require('body-parser');
+global.__basedir = __dirname;
+//use express static folder
+app.use(express.static("./public"))
+// body-parser middleware use
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({
+    extended: true
+}))
+
 var corsOptions = {
   origin: '*',
 };

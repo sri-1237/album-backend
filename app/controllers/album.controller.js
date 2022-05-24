@@ -1,10 +1,12 @@
 const db = require("../models");
 const Album = db.albums;
 const Op = db.Sequelize.Op;
+const fs = require("fs");
+
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.query.title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -12,10 +14,15 @@ exports.create = (req, res) => {
   }
   // Create a Tutorial
   const album = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
-    artist: req.body.artist
+    title: req.query.title,
+    description: req.query.description,
+    published: req.query.published ? req.query.published : false,
+    artist: req.query.artist,
+    fileType:req.file != undefined ? req.file.mimetype: null,
+    fileName:req.file != undefined ? req.file.originalname: null,
+    data:req.file != undefined ? fs.readFileSync(
+      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null
+
   };
   // Save Tutorial in the database
   Album.create(album)
@@ -23,6 +30,7 @@ exports.create = (req, res) => {
       res.send(data);
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Album."
@@ -49,6 +57,7 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
   Album.findByPk(id)
     .then(data => {
+    
       if (data) {
         res.send(data);
       } else {
@@ -58,6 +67,7 @@ exports.findOne = (req, res) => {
       }
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send({
         message: "Error retrieving Album with id=" + id
       });
