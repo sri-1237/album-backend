@@ -27,6 +27,7 @@ exports.create = (req, res) => {
   // Save Tutorial in the database
   Album.create(album)
     .then(data => {
+    
       res.send(data);
     })
     .catch(err => {

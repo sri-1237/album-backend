@@ -21,6 +21,9 @@ module.exports = (sequelize, Sequelize) => {
     },
     data: {
       type: Sequelize.BLOB("long"),
+    },
+    artistId: {
+      type: Sequelize.INTEGER,
     }
   });
   return Album;
