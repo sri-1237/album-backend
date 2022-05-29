@@ -11,7 +11,7 @@ module.exports = app => {
   // Retrieve a single Tutorial with id
   router.get("/:id", albums.findOne);
   // Update a Tutorial with id
-  router.put("/:id", albums.update);
+  router.put("/:id",upload.single("file"), albums.update);
   // Delete a Tutorial with id
   router.delete("/:id", albums.delete);
   // Delete all Tutorials
