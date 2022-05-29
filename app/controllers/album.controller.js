@@ -76,8 +76,19 @@ exports.findOne = (req, res) => {
 };
 // Update a Tutorial by the id in the request
 exports.update = (req, res) => {
+
+  const album = {
+    title: req.query.title!=undefined ? req.query.title:null,
+    description: req.query.description!=undefined ? req.query.description:null,
+    artist:req.query.artist!=undefined ? req.query.artist:null,
+    fileType:req.file != undefined ? req.file.mimetype: null,
+    fileName:req.file != undefined ? req.file.originalname: null,
+    data:req.file != undefined ? fs.readFileSync(
+      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null
+
+  };
   const id = req.params.id;
-  Album.update(req.body, {
+  Album.update(album, {
     where: { id: id }
   })
     .then(num => {
