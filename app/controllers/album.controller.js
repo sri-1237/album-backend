@@ -160,3 +160,19 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
+
+// Retrieve all albums from the database with given artist id.
+exports.findAllWithArtist = (req, res) => {
+  const artistId = req.params.artistId;
+  
+  Album.findAll({ where: {artistId : artistId} })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving albums."
+      });
+    });
+};
