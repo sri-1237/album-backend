@@ -24,6 +24,9 @@ module.exports = (sequelize, Sequelize) => {
     },
     artistId: {
       type: Sequelize.INTEGER,
+    },
+    releasedYear: {
+      type: Sequelize.STRING,
     }
   });
   return Album;
