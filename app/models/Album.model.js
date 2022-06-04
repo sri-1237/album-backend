@@ -22,9 +22,7 @@ module.exports = (sequelize, Sequelize) => {
     data: {
       type: Sequelize.BLOB("long"),
     },
-    artistId: {
-      type: Sequelize.INTEGER,
-    },
+   
     releasedYear: {
       type: Sequelize.STRING,
     }
