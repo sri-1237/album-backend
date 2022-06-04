@@ -1,7 +1,7 @@
 const db = require("../models");
 const Artist = db.artists;
 const Op = db.Sequelize.Op;
-
+const fs = require("fs");
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
     // Validate request

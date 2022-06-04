@@ -22,7 +22,7 @@ exports.create = (req, res) => {
     data:req.file != undefined ? fs.readFileSync(
       __basedir + "/resources/static/assets/uploads/" + req.file.filename): null,
       releasedYear: req.query.releasedYear,
-
+      artistId: req.query.artistId !=undefined ? parseInt(req.query.artistId) : null
   };
   // Save Tutorial in the database
   Album.create(album)
