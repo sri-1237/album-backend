@@ -16,12 +16,12 @@ exports.create = (req, res) => {
   const album = {
     title: req.query.title,
     description: req.query.description,
-    published: req.query.published ? req.query.published : false,
     artist: req.query.artist,
     fileType:req.file != undefined ? req.file.mimetype: null,
     fileName:req.file != undefined ? req.file.originalname: null,
     data:req.file != undefined ? fs.readFileSync(
-      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null
+      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null,
+      releasedYear: req.query.releasedYear,
 
   };
   // Save Tutorial in the database
