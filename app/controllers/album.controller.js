@@ -21,7 +21,7 @@ exports.create = (req, res) => {
     fileName:req.file != undefined ? req.file.originalname: null,
     data:req.file != undefined ? fs.readFileSync(
       __basedir + "/resources/static/assets/uploads/" + req.file.filename): null,
-      releasedYear: req.query.releasedYear,
+      releasedYear: req.query.releasedYear!= undefined ? req.query.releasedYear:null,
       artistId: req.query.artistId !=undefined ? parseInt(req.query.artistId) : null
   };
   // Save Tutorial in the database
@@ -84,8 +84,9 @@ exports.update = (req, res) => {
     fileType:req.file != undefined ? req.file.mimetype: null,
     fileName:req.file != undefined ? req.file.originalname: null,
     data:req.file != undefined ? fs.readFileSync(
-      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null
-
+      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null,
+      releasedYear: req.query.releasedYear!= undefined ? req.query.releasedYear:null,
+      artistId: req.query.artistId !=undefined ? parseInt(req.query.artistId) : null
   };
   const id = req.params.id;
   Album.update(album, {
