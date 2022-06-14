@@ -30,9 +30,27 @@ exports.create = (req, res) => {
       });
     });
 };
-// Retrieve all Lessons from the database.
+
 exports.findAll = (req, res) => {
+  console.log("findall ");
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  Track.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving albums."
+      });
+    });
+};
+// Retrieve all Lessons from the database.
+exports.findAllAlbum = (req, res) => {
   const albumId = req.params.albumId;
+
+  console.log("findall with album");
   
   Track.findAll({ where: {albumId : albumId} })
     .then(data => {
