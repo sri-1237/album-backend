@@ -1,7 +1,7 @@
 const db = require("../models");
 const Artist = db.artists;
 const Op = db.Sequelize.Op;
-
+const fs = require("fs");
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
     // Validate request
@@ -71,8 +71,17 @@ exports.create = (req, res) => {
   };
   // Update a Tutorial by the id in the request
   exports.update = (req, res) => {
+    const artist = {
+      name: req.query.name,
+      description: req.query.description,
+      fileType:req.file != undefined ? req.file.mimetype: null,
+      fileName:req.file != undefined ? req.file.originalname: null,
+      data:req.file != undefined ? fs.readFileSync(
+        __basedir + "/resources/static/assets/uploads/" + req.file.filename): null
+  
+    };
     const id = req.params.id;
-    Artist.update(req.body, {
+    Artist.update(artist, {
       where: { id: id }
     })
       .then(num => {

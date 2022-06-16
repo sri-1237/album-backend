@@ -16,13 +16,13 @@ exports.create = (req, res) => {
   const album = {
     title: req.query.title,
     description: req.query.description,
-    published: req.query.published ? req.query.published : false,
     artist: req.query.artist,
     fileType:req.file != undefined ? req.file.mimetype: null,
     fileName:req.file != undefined ? req.file.originalname: null,
     data:req.file != undefined ? fs.readFileSync(
-      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null
-
+      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null,
+      releasedYear: req.query.releasedYear!= undefined ? req.query.releasedYear:null,
+      artistId: req.query.artistId !=undefined ? parseInt(req.query.artistId) : null
   };
   // Save Tutorial in the database
   Album.create(album)
@@ -84,8 +84,9 @@ exports.update = (req, res) => {
     fileType:req.file != undefined ? req.file.mimetype: null,
     fileName:req.file != undefined ? req.file.originalname: null,
     data:req.file != undefined ? fs.readFileSync(
-      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null
-
+      __basedir + "/resources/static/assets/uploads/" + req.file.filename): null,
+      releasedYear: req.query.releasedYear!= undefined ? req.query.releasedYear:null,
+      artistId: req.query.artistId !=undefined ? parseInt(req.query.artistId) : null
   };
   const id = req.params.id;
   Album.update(album, {
@@ -150,6 +151,22 @@ exports.deleteAll = (req, res) => {
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
   Album.findAll({ where: { published: true } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving albums."
+      });
+    });
+};
+
+// Retrieve all albums from the database with given artist id.
+exports.findAllWithArtist = (req, res) => {
+  const artistId = req.params.artistId;
+  
+  Album.findAll({ where: {artistId : artistId} })
     .then(data => {
       res.send(data);
     })
